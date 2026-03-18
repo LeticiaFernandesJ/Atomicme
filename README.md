@@ -250,24 +250,6 @@ O visual foi construído com um design system próprio baseado em CSS variables.
 Fonte: **DM Sans** (Google Fonts), pesos 400 e 500.
 
 ---
-
-## Deploy em produção
-
-Para colocar no ar, substitua o SQLite por um banco PostgreSQL. Neon, Supabase e Railway oferecem planos gratuitos adequados para projetos pessoais.
-
-No `prisma/schema.prisma`, troque o provider:
-
-```prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-```
-
-Atualize o `DATABASE_URL` no painel de variáveis de ambiente da sua plataforma de deploy com a string de conexão fornecida pelo serviço escolhido. Em seguida rode `npx prisma migrate deploy` para aplicar as migrations no banco de produção.
-
----
-
 ## Licença
 
 MIT
