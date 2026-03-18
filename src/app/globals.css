@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400;1,9..40,500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #1b2b4b;
+  --navy-deep: #111e36;
+  --caramel: #c4884a;
+  --caramel-light: #d9a872;
+  --caramel-pale: #f2e4d0;
+  --caramel-muted: #e8c99a;
+  --offwhite: #faf7f2;
+  --offwhite-2: #f0ebe1;
+  --brown: #6b4226;
+  --text-dark: #1b2b4b;
+  --text-mid: #4a5568;
+  --text-muted: #8a8070;
+  --border: #e2d9cc;
+  --border-light: #ede7dd;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  background-color: var(--offwhite);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility classes for design system */
+.font-medium {
+  font-weight: 500;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--offwhite-2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--caramel-muted);
+}

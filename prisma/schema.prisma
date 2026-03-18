@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(cuid())
+  name       String
+  email      String      @unique
+  password   String?
+  image      String?
+  xp         Int         @default(0)
+  level      Int         @default(1)
+  createdAt  DateTime    @default(now())
+  habits     Habit[]
+  stacks     Stack[]
+  identities Identity[]
+  badges     UserBadge[]
+  accounts   Account[]
+  sessions   Session[]
+  rewards    Reward[]
+}
+
+model Identity {
+  id     String  @id @default(cuid())
+  name   String
+  xp     Int     @default(0)
+  userId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habits Habit[]
+}
+
+model Habit {
+  id          String      @id @default(cuid())
+  name        String
+  trigger     String
+  motivation  String
+  minVersion  String
+  reward      String
+  streak      Int         @default(0)
+  active      Boolean     @default(true)
+  identityId  String?
+  identity    Identity?   @relation(fields: [identityId], references: [id])
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logs        HabitLog[]
+  stackItems  StackItem[]
+  createdAt   DateTime    @default(now())
+}
+
+model HabitLog {
+  id       String   @id @default(cuid())
+  habitId  String
+  habit    Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  date     DateTime @default(now())
+  done     Boolean
+}
+
+model Stack {
+  id     String      @id @default(cuid())
+  name   String
+  userId String
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items  StackItem[]
+}
+
+model StackItem {
+  id      String @id @default(cuid())
+  order   Int
+  habitId String
+  habit   Habit  @relation(fields: [habitId], references: [id])
+  stackId String
+  stack   Stack  @relation(fields: [stackId], references: [id], onDelete: Cascade)
+}
+
+model Badge {
+  id           String      @id @default(cuid())
+  slug         String      @unique
+  name         String
+  description  String
+  daysRequired Int?
+  xpRequired   Int         @default(0)
+  earnedBy     UserBadge[]
+}
+
+model UserBadge {
+  id       String   @id @default(cuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badgeId  String
+  badge    Badge    @relation(fields: [badgeId], references: [id])
+  earnedAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Reward {
+  id           String   @id @default(cuid())
+  name         String
+  daysRequired Int      @default(0)
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+}
