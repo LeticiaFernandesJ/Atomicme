@@ -80,12 +80,7 @@ const navItems = [
 
 export function Sidebar({ userName, userImage, userLevel, userXp }: SidebarProps) {
   const pathname = usePathname();
-
-  const isActive = (href: string) => {
-    if (href === "/dashboard") return pathname === "/dashboard";
-    return pathname.startsWith(href);
-  };
-
+  const isActive = (href: string) => href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
   const firstName = userName.split(" ")[0];
 
   return (
@@ -93,49 +88,33 @@ export function Sidebar({ userName, userImage, userLevel, userXp }: SidebarProps
       className="flex flex-col w-60 shrink-0 h-screen sticky top-0"
       style={{ background: "var(--navy-deep)", borderRight: "0.5px solid rgba(255,255,255,0.06)" }}
     >
-      {/* Logo */}
       <div className="px-6 py-6 shrink-0">
         <span className="text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "var(--caramel)" }}>
           atomicme
         </span>
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 px-3 flex flex-col gap-0.5 overflow-y-auto">
         {navItems.map(({ href, label, Icon }) => {
           const active = isActive(href);
           return (
-            <Link
-              key={href}
-              href={href}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-sm transition-all duration-150 group"
-              style={{
-                background: active ? "rgba(196,136,74,0.12)" : "transparent",
-                color: active ? "var(--caramel)" : "var(--text-muted)",
-              }}
-              onMouseEnter={(e) => {
-                if (!active) e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-              }}
-              onMouseLeave={(e) => {
-                if (!active) e.currentTarget.style.background = "transparent";
-              }}
+            <Link key={href} href={href}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-sm transition-all duration-150"
+              style={{ background: active ? "rgba(196,136,74,0.12)" : "transparent", color: active ? "var(--caramel)" : "var(--text-muted)" }}
+              onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+              onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = "transparent"; }}
             >
               <Icon active={active} />
               <span className="font-medium">{label}</span>
-              {active && (
-                <div className="ml-auto w-1 h-4 rounded-full" style={{ background: "var(--caramel)" }} />
-              )}
+              {active && <div className="ml-auto w-1 h-4 rounded-full" style={{ background: "var(--caramel)" }} />}
             </Link>
           );
         })}
       </nav>
 
-      {/* User card */}
       <div className="px-3 pb-4 shrink-0">
-        <div
-          className="rounded-[12px] p-3 flex flex-col gap-2"
-          style={{ background: "rgba(255,255,255,0.04)", border: "0.5px solid rgba(255,255,255,0.06)" }}
-        >
+        <div className="rounded-[12px] p-3 flex flex-col gap-2"
+          style={{ background: "rgba(255,255,255,0.04)", border: "0.5px solid rgba(255,255,255,0.06)" }}>
           <div className="flex items-center gap-2.5">
             {userImage ? (
               <img src={userImage} alt={userName} className="w-8 h-8 rounded-full object-cover"
@@ -151,16 +130,47 @@ export function Sidebar({ userName, userImage, userLevel, userXp }: SidebarProps
               <p className="text-[11px]" style={{ color: "var(--caramel)" }}>Nível {userLevel} · {userXp} XP</p>
             </div>
           </div>
-
-          <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
+          <button onClick={() => signOut({ callbackUrl: "/login" })}
             className="w-full text-left text-xs py-1.5 px-2 rounded-[8px] transition-all hover:opacity-70"
-            style={{ color: "var(--text-muted)" }}
-          >
+            style={{ color: "var(--text-muted)" }}>
             Sair
           </button>
         </div>
       </div>
     </aside>
+  );
+}
+
+// ── Mobile Bottom Nav ──
+export function MobileNav() {
+  const pathname = usePathname();
+  const isActive = (href: string) => href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
+
+  const mobileItems = [
+    { href: "/dashboard",  label: "Início",     Icon: IconHome },
+    { href: "/habitos",    label: "Hábitos",    Icon: IconHabits },
+    { href: "/stacking",   label: "Stacking",   Icon: IconStacking },
+    { href: "/conquistas", label: "Conquistas", Icon: IconAchievements },
+    { href: "/identidade", label: "Perfil",     Icon: IconIdentity },
+  ];
+
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2"
+      style={{ background: "var(--offwhite)", borderTop: "0.5px solid var(--border-light)", height: "60px" }}>
+      {mobileItems.map(({ href, label, Icon }) => {
+        const active = isActive(href);
+        return (
+          <Link key={href} href={href}
+            className="flex flex-col items-center gap-0.5 flex-1 py-2 relative"
+            style={{ color: active ? "var(--caramel)" : "var(--text-muted)" }}>
+            <Icon active={active} />
+            <span className="text-[10px] font-medium">{label}</span>
+            {active && (
+              <span className="absolute bottom-0.5 w-1 h-1 rounded-full" style={{ background: "var(--caramel)" }} />
+            )}
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
