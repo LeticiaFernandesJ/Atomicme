@@ -13,4 +13,3 @@ export async function POST() {
   const newBadges = await checkAndAwardBadges(session.user.id);
   return NextResponse.json({ newBadges });
 }
-
