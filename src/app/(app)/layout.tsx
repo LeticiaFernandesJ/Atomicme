@@ -21,7 +21,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <div className="flex min-h-screen" style={{ background: "var(--offwhite)" }}>
 
-      {/* Sidebar — visível só no desktop */}
+      {/* Sidebar — desktop only */}
       <div className="hidden lg:flex">
         <Sidebar
           userName={userName}
@@ -31,15 +31,19 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         />
       </div>
 
-      {/* Conteúdo principal */}
+      {/* Main content */}
       <main className="flex-1 min-w-0 overflow-y-auto">
-        {/* Header mobile */}
-        <div className="lg:hidden flex items-center justify-between px-4 py-4 sticky top-0 z-30"
+
+        {/* Mobile top bar */}
+        <div className="lg:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-30"
           style={{ background: "var(--offwhite)", borderBottom: "0.5px solid var(--border-light)" }}>
           <span className="text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "var(--navy)" }}>
             atomicme
           </span>
           <div className="flex items-center gap-2">
+            <span className="text-xs" style={{ color: "var(--caramel)" }}>
+              Nível {userLevel}
+            </span>
             {userImage ? (
               <img src={userImage} alt={userName} className="w-7 h-7 rounded-full object-cover"
                 style={{ border: "1.5px solid var(--caramel)" }} />
@@ -58,9 +62,14 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </div>
       </main>
 
-      {/* Bottom nav — visível só no mobile */}
+      {/* Mobile bottom nav */}
       <div className="lg:hidden">
-        <MobileNav />
+        <MobileNav
+          userName={userName}
+          userImage={userImage}
+          userLevel={userLevel}
+          userXp={userXp}
+        />
       </div>
     </div>
   );
