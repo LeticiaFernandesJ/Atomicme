@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useState } from "react";
 
 interface SidebarProps {
   userName: string;
@@ -68,8 +69,26 @@ function IconRewards({ active }: { active: boolean }) {
     </svg>
   );
 }
+function IconMore({ active }: { active: boolean }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <circle cx="5" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="19" cy="12" r="1.5" fill="currentColor" />
+    </svg>
+  );
+}
+function IconLogout() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <polyline points="16 17 21 12 16 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
-const navItems = [
+const desktopNavItems = [
   { href: "/dashboard",   label: "Início",      Icon: IconHome },
   { href: "/habitos",     label: "Hábitos",     Icon: IconHabits },
   { href: "/stacking",    label: "Stacking",    Icon: IconStacking },
@@ -78,16 +97,28 @@ const navItems = [
   { href: "/recompensas", label: "Recompensas", Icon: IconRewards },
 ];
 
+const mobileMainItems = [
+  { href: "/dashboard",   label: "Início",     Icon: IconHome },
+  { href: "/habitos",     label: "Hábitos",    Icon: IconHabits },
+  { href: "/stacking",    label: "Stacking",   Icon: IconStacking },
+  { href: "/conquistas",  label: "Conquistas", Icon: IconAchievements },
+];
+
+const mobileMoreItems = [
+  { href: "/identidade",  label: "Identidade",  Icon: IconIdentity },
+  { href: "/recompensas", label: "Recompensas", Icon: IconRewards },
+];
+
+// ── Desktop Sidebar ──
 export function Sidebar({ userName, userImage, userLevel, userXp }: SidebarProps) {
   const pathname = usePathname();
   const isActive = (href: string) => href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
   const firstName = userName.split(" ")[0];
 
   return (
-    <aside
-      className="flex flex-col w-60 shrink-0 h-screen sticky top-0"
-      style={{ background: "var(--navy-deep)", borderRight: "0.5px solid rgba(255,255,255,0.06)" }}
-    >
+    <aside className="flex flex-col w-60 shrink-0 h-screen sticky top-0"
+      style={{ background: "var(--navy-deep)", borderRight: "0.5px solid rgba(255,255,255,0.06)" }}>
+
       <div className="px-6 py-6 shrink-0">
         <span className="text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "var(--caramel)" }}>
           atomicme
@@ -95,7 +126,7 @@ export function Sidebar({ userName, userImage, userLevel, userXp }: SidebarProps
       </div>
 
       <nav className="flex-1 px-3 flex flex-col gap-0.5 overflow-y-auto">
-        {navItems.map(({ href, label, Icon }) => {
+        {desktopNavItems.map(({ href, label, Icon }) => {
           const active = isActive(href);
           return (
             <Link key={href} href={href}
@@ -131,8 +162,9 @@ export function Sidebar({ userName, userImage, userLevel, userXp }: SidebarProps
             </div>
           </div>
           <button onClick={() => signOut({ callbackUrl: "/login" })}
-            className="w-full text-left text-xs py-1.5 px-2 rounded-[8px] transition-all hover:opacity-70"
+            className="w-full text-left text-xs py-1.5 px-2 rounded-[8px] transition-all hover:opacity-70 flex items-center gap-2"
             style={{ color: "var(--text-muted)" }}>
+            <IconLogout />
             Sair
           </button>
         </div>
@@ -142,35 +174,105 @@ export function Sidebar({ userName, userImage, userLevel, userXp }: SidebarProps
 }
 
 // ── Mobile Bottom Nav ──
-export function MobileNav() {
+export function MobileNav({ userName, userImage, userLevel, userXp }: SidebarProps) {
   const pathname = usePathname();
-  const isActive = (href: string) => href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
+  const [showMore, setShowMore] = useState(false);
 
-  const mobileItems = [
-    { href: "/dashboard",  label: "Início",     Icon: IconHome },
-    { href: "/habitos",    label: "Hábitos",    Icon: IconHabits },
-    { href: "/stacking",   label: "Stacking",   Icon: IconStacking },
-    { href: "/conquistas", label: "Conquistas", Icon: IconAchievements },
-    { href: "/identidade", label: "Perfil",     Icon: IconIdentity },
-  ];
+  const isActive = (href: string) => href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
+  const isMoreActive = mobileMoreItems.some((i) => isActive(i.href));
+  const firstName = userName.split(" ")[0];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2"
-      style={{ background: "var(--offwhite)", borderTop: "0.5px solid var(--border-light)", height: "60px" }}>
-      {mobileItems.map(({ href, label, Icon }) => {
-        const active = isActive(href);
-        return (
-          <Link key={href} href={href}
-            className="flex flex-col items-center gap-0.5 flex-1 py-2 relative"
-            style={{ color: active ? "var(--caramel)" : "var(--text-muted)" }}>
-            <Icon active={active} />
-            <span className="text-[10px] font-medium">{label}</span>
-            {active && (
-              <span className="absolute bottom-0.5 w-1 h-1 rounded-full" style={{ background: "var(--caramel)" }} />
-            )}
-          </Link>
-        );
-      })}
-    </nav>
+    <>
+      {/* More drawer — aparece acima do nav */}
+      {showMore && (
+        <>
+          {/* Backdrop */}
+          <div className="fixed inset-0 z-40" onClick={() => setShowMore(false)} />
+
+          {/* Drawer */}
+          <div className="fixed bottom-[60px] left-0 right-0 z-50 rounded-t-[16px] overflow-hidden"
+            style={{ background: "var(--offwhite)", border: "0.5px solid var(--border-light)", boxShadow: "0 -4px 24px rgba(0,0,0,0.08)" }}>
+
+            {/* User info */}
+            <div className="px-4 py-4 flex items-center gap-3"
+              style={{ borderBottom: "0.5px solid var(--border-light)" }}>
+              {userImage ? (
+                <img src={userImage} alt={userName} className="w-10 h-10 rounded-full object-cover"
+                  style={{ border: "1.5px solid var(--caramel)" }} />
+              ) : (
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium shrink-0"
+                  style={{ background: "var(--navy)", color: "var(--caramel)", border: "1.5px solid var(--caramel)" }}>
+                  {firstName[0]?.toUpperCase()}
+                </div>
+              )}
+              <div>
+                <p className="text-sm font-medium" style={{ color: "var(--text-dark)" }}>{userName}</p>
+                <p className="text-xs" style={{ color: "var(--caramel)" }}>Nível {userLevel} · {userXp} XP</p>
+              </div>
+            </div>
+
+            {/* Extra nav items */}
+            <div className="px-3 py-2">
+              {mobileMoreItems.map(({ href, label, Icon }) => {
+                const active = isActive(href);
+                return (
+                  <Link key={href} href={href}
+                    onClick={() => setShowMore(false)}
+                    className="flex items-center gap-3 px-3 py-3 rounded-[10px] transition-all"
+                    style={{ color: active ? "var(--caramel)" : "var(--text-dark)", background: active ? "var(--caramel-pale)" : "transparent" }}>
+                    <Icon active={active} />
+                    <span className="text-sm font-medium">{label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Logout */}
+            <div className="px-3 pb-4" style={{ borderTop: "0.5px solid var(--border-light)" }}>
+              <button
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="w-full flex items-center gap-3 px-3 py-3 rounded-[10px] transition-all hover:opacity-70 mt-2"
+                style={{ color: "var(--text-muted)" }}>
+                <IconLogout />
+                <span className="text-sm font-medium">Sair da conta</span>
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Bottom nav bar */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2"
+        style={{ background: "var(--offwhite)", borderTop: "0.5px solid var(--border-light)", height: "60px" }}>
+
+        {mobileMainItems.map(({ href, label, Icon }) => {
+          const active = isActive(href);
+          return (
+            <Link key={href} href={href}
+              className="flex flex-col items-center gap-0.5 flex-1 py-2 relative"
+              style={{ color: active ? "var(--caramel)" : "var(--text-muted)" }}>
+              <Icon active={active} />
+              <span className="text-[10px] font-medium">{label}</span>
+              {active && (
+                <span className="absolute bottom-0.5 w-1 h-1 rounded-full" style={{ background: "var(--caramel)" }} />
+              )}
+            </Link>
+          );
+        })}
+
+        {/* More button */}
+        <button
+          onClick={() => setShowMore(!showMore)}
+          className="flex flex-col items-center gap-0.5 flex-1 py-2 relative"
+          style={{ color: isMoreActive || showMore ? "var(--caramel)" : "var(--text-muted)" }}>
+          <IconMore active={isMoreActive || showMore} />
+          <span className="text-[10px] font-medium">Mais</span>
+          {(isMoreActive || showMore) && (
+            <span className="absolute bottom-0.5 w-1 h-1 rounded-full" style={{ background: "var(--caramel)" }} />
+          )}
+        </button>
+      </nav>
+    </>
   );
 }
