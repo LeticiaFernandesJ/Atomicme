@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
@@ -40,7 +42,6 @@ async function HabitDetailContent({ params, searchParams }: HabitDetailPageProps
     orderBy: { xp: "desc" },
   });
 
-  // Stats
   const totalLogs = habit.logs.filter((l) => l.done).length;
   const last7 = habit.logs.filter((l) => {
     const d = new Date(l.date);
@@ -106,109 +107,69 @@ async function HabitDetailContent({ params, searchParams }: HabitDetailPageProps
       />
 
       <div className="flex flex-col gap-4 px-4 pt-4 pb-8">
-        {/* Hero */}
-        <div
-          className="rounded-[12px] p-5"
-          style={{ background: "var(--navy-deep)" }}
-        >
+        <div className="rounded-[12px] p-5" style={{ background: "var(--navy-deep)" }}>
           {!habit.active && (
             <div className="mb-3">
-              <span
-                className="text-[10px] font-medium uppercase tracking-wide px-2 py-1 rounded-[6px]"
-                style={{ background: "rgba(255,255,255,0.08)", color: "var(--text-muted)" }}
-              >
+              <span className="text-[10px] font-medium uppercase tracking-wide px-2 py-1 rounded-[6px]"
+                style={{ background: "rgba(255,255,255,0.08)", color: "var(--text-muted)" }}>
                 Arquivado
               </span>
             </div>
           )}
-
-          <p className="text-lg font-medium" style={{ color: "var(--offwhite)" }}>
-            {habit.name}
-          </p>
-
+          <p className="text-lg font-medium" style={{ color: "var(--offwhite)" }}>{habit.name}</p>
           {habit.identity && (
             <p className="text-xs mt-1 italic" style={{ color: "var(--caramel-muted)" }}>
               &ldquo;Sou uma pessoa que {habit.identity.name}&rdquo;
             </p>
           )}
-
-          {/* Streak */}
           <div className="flex items-center gap-4 mt-4">
             <div className="flex flex-col gap-0.5">
-              <span className="text-2xl font-medium" style={{ color: "var(--caramel)" }}>
-                {habit.streak}
-              </span>
-              <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>
-                sequência atual
-              </span>
+              <span className="text-2xl font-medium" style={{ color: "var(--caramel)" }}>{habit.streak}</span>
+              <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>sequência atual</span>
             </div>
             <div className="w-px h-8" style={{ background: "rgba(255,255,255,0.08)" }} />
             <div className="flex flex-col gap-0.5">
-              <span className="text-2xl font-medium" style={{ color: "var(--offwhite)" }}>
-                {totalLogs}
-              </span>
-              <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>
-                total feitos
-              </span>
+              <span className="text-2xl font-medium" style={{ color: "var(--offwhite)" }}>{totalLogs}</span>
+              <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>total feitos</span>
             </div>
             <div className="w-px h-8" style={{ background: "rgba(255,255,255,0.08)" }} />
             <div className="flex flex-col gap-0.5">
-              <span className="text-2xl font-medium" style={{ color: "var(--offwhite)" }}>
-                {completionRate}%
-              </span>
-              <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>
-                taxa 30 dias
-              </span>
+              <span className="text-2xl font-medium" style={{ color: "var(--offwhite)" }}>{completionRate}%</span>
+              <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>taxa 30 dias</span>
             </div>
           </div>
         </div>
 
-        {/* 4 Laws summary */}
         <div className="flex flex-col gap-2">
-          <p className="text-xs font-medium uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>
-            As 4 leis
-          </p>
-
+          <p className="text-xs font-medium uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>As 4 leis</p>
           {[
             { number: "1", label: "Gatilho (óbvio)", value: habit.trigger },
             { number: "2", label: "Motivação (atrativo)", value: habit.motivation },
             { number: "3", label: "Versão mínima (fácil)", value: habit.minVersion },
             { number: "4", label: "Recompensa (satisfatório)", value: habit.reward },
           ].map(({ number, label, value }) => (
-            <div
-              key={number}
-              className="rounded-[12px] p-3 flex items-start gap-3"
-              style={{ background: "var(--offwhite-2)", border: "0.5px solid var(--border-light)" }}
-            >
-              <div
-                className="shrink-0 w-6 h-6 rounded-[6px] flex items-center justify-center text-xs font-medium"
-                style={{ background: "var(--navy)", color: "var(--caramel-pale)" }}
-              >
+            <div key={number} className="rounded-[12px] p-3 flex items-start gap-3"
+              style={{ background: "var(--offwhite-2)", border: "0.5px solid var(--border-light)" }}>
+              <div className="shrink-0 w-6 h-6 rounded-[6px] flex items-center justify-center text-xs font-medium"
+                style={{ background: "var(--navy)", color: "var(--caramel-pale)" }}>
                 {number}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-medium uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>
-                  {label}
-                </p>
+                <p className="text-[10px] font-medium uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>{label}</p>
                 <p className="text-sm mt-0.5" style={{ color: "var(--text-dark)" }}>{value}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Quote */}
         <BookQuote eyebrow="Hábitos Atômicos">
           Cada ação que você realiza é um voto para o tipo de pessoa que deseja se tornar.
         </BookQuote>
 
-        {/* Calendar */}
         <HabitLogCalendar logs={habit.logs.map((l) => ({ date: l.date, done: l.done }))} />
 
-        {/* This week stat */}
-        <div
-          className="rounded-[12px] p-4 flex items-center justify-between"
-          style={{ background: "var(--offwhite-2)", border: "0.5px solid var(--border-light)" }}
-        >
+        <div className="rounded-[12px] p-4 flex items-center justify-between"
+          style={{ background: "var(--offwhite-2)", border: "0.5px solid var(--border-light)" }}>
           <div>
             <p className="text-sm font-medium" style={{ color: "var(--text-dark)" }}>Esta semana</p>
             <p className="text-xs" style={{ color: "var(--text-muted)" }}>Últimos 7 dias</p>
