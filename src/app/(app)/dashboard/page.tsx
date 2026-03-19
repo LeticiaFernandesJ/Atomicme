@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -73,7 +71,9 @@ async function DashboardContent() {
     const d = new Date(heatmapStart); d.setDate(heatmapStart.getDate() + i);
     const nextD = new Date(d); nextD.setDate(d.getDate() + 1);
     const dateStr = d.toISOString().split("T")[0];
-    const count = user.habits.filter((h) => h.logs.some((l) => l.done && new Date(l.date) >= d && new Date(l.date) < nextD)).length;
+    const count = user.habits.filter((h) =>
+      h.logs.some((l) => l.done && new Date(l.date) >= d && new Date(l.date) < nextD)
+    ).length;
     return { date: dateStr, count, total: user.habits.length };
   });
 
@@ -85,26 +85,25 @@ async function DashboardContent() {
   }).length;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
+
       {/* Page header */}
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-medium" style={{ color: "var(--text-dark)" }}>
+          <h1 className="text-xl lg:text-2xl font-medium" style={{ color: "var(--text-dark)" }}>
             {getGreeting(user.name)}
           </h1>
-          <p className="text-sm mt-1 capitalize" style={{ color: "var(--text-muted)" }}>
+          <p className="text-sm mt-0.5 capitalize" style={{ color: "var(--text-muted)" }}>
             {getTodayLabel()}
             {maxStreak > 0 && (
-              <span style={{ color: "var(--caramel)" }}> · 🔥 {maxStreak} dias em sequência</span>
+              <span style={{ color: "var(--caramel)" }}> · 🔥 {maxStreak}d</span>
             )}
           </p>
         </div>
-        <Link
-          href="/habitos/novo"
-          className="text-sm font-medium px-4 py-2 rounded-[10px] transition-all hover:opacity-90"
-          style={{ background: "var(--navy)", color: "var(--caramel-pale)" }}
-        >
-          + Novo hábito
+        <Link href="/habitos/novo"
+          className="shrink-0 text-sm font-medium px-3 py-2 rounded-[10px] transition-all hover:opacity-90"
+          style={{ background: "var(--navy)", color: "var(--caramel-pale)" }}>
+          + Novo
         </Link>
       </div>
 
@@ -112,7 +111,7 @@ async function DashboardContent() {
       {missedYesterdayCount > 0 && (
         <div className="rounded-[12px] p-4 flex items-start gap-3"
           style={{ background: "var(--caramel-pale)", border: "0.5px solid var(--caramel-muted)" }}>
-          <span className="text-lg">⚡</span>
+          <span className="text-lg shrink-0">⚡</span>
           <div>
             <p className="text-sm font-medium" style={{ color: "var(--brown)" }}>Não perca dois dias seguidos</p>
             <p className="text-xs mt-0.5" style={{ color: "var(--text-mid)" }}>
@@ -122,9 +121,9 @@ async function DashboardContent() {
         </div>
       )}
 
-      {/* 2-col grid: identity + metrics */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-2">
+      {/* Identity hero + metrics — empilhados no mobile, grid no desktop */}
+      <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2">
           <IdentityHero
             identityName={primaryIdentity?.name ?? null}
             userName={user.name}
@@ -133,7 +132,7 @@ async function DashboardContent() {
             streak={maxStreak}
           />
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="grid grid-cols-3 lg:grid-cols-1 gap-2 lg:gap-3">
           <MetricCard value={`${habitsDoneToday.size}/${user.habits.length}`} label="hoje" />
           <MetricCard value={maxStreak} suffix="d" label="sequência" highlight={maxStreak > 0} />
           <MetricCard value={weeklyRate} suffix="%" label="esta semana" highlight={weeklyRate >= 70} />
