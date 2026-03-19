@@ -8,18 +8,13 @@ interface AppBarProps {
   children?: ReactNode;
 }
 
-export function AppBar({ title, dark = false, leftContent, rightContent, children }: AppBarProps) {
+export function AppBar({ title, leftContent, rightContent, children }: AppBarProps) {
   return (
-    <div
-      className="flex items-center justify-between gap-3 mb-6"
-    >
+    <div className="flex items-center justify-between gap-3 mb-5">
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {leftContent}
         {title && (
-          <h1
-            className="text-xl font-medium"
-            style={{ color: "var(--text-dark)" }}
-          >
+          <h1 className="text-lg lg:text-xl font-medium" style={{ color: "var(--text-dark)" }}>
             {title}
           </h1>
         )}
@@ -34,10 +29,8 @@ export function AppBar({ title, dark = false, leftContent, rightContent, childre
 
 export function Wordmark({ dark = false }: { dark?: boolean }) {
   return (
-    <span
-      className="text-xs font-medium tracking-[0.2em] uppercase"
-      style={{ color: dark ? "var(--caramel-pale)" : "var(--navy)" }}
-    >
+    <span className="text-xs font-medium tracking-[0.2em] uppercase"
+      style={{ color: dark ? "var(--caramel-pale)" : "var(--navy)" }}>
       atomicme
     </span>
   );
