@@ -13,9 +13,4 @@ export async function POST() {
   const newBadges = await checkAndAwardBadges(session.user.id);
   return NextResponse.json({ newBadges });
 }
-```
 
-E faça o mesmo para **todas** as suas rotas de API. Me manda os outros arquivos:
-```
-src/app/api/habits/route.ts
-src/app/api/logs/route.ts
