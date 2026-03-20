@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Sidebar, MobileNav } from "@/components/layout/Sidebar";
+import { InstallPrompt } from "@/components/InstallPrompt";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -61,6 +62,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           {children}
         </div>
       </main>
+
+      {/* PWA install prompt */}
+      <InstallPrompt />
 
       {/* Mobile bottom nav */}
       <div className="lg:hidden">
