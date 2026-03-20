@@ -12,9 +12,10 @@ import { HabitRow } from "@/components/habits/HabitRow";
 
 function getGreeting(name: string): string {
   const hour = new Date().getHours();
-  if (hour < 12) return `Bom dia`;
-  if (hour < 18) return `Boa tarde`;
-  return `Boa noite`;
+  const first = name.split(" ")[0];
+  if (hour < 12) return `Olá, ${first}.`;
+  if (hour < 18) return `Olá, ${first}.`;
+  return `Olá, ${first}.`;
 }
 
 function getTodayLabel(): string {
