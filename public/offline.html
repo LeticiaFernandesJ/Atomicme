@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AtomicMe — Sem conexão</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #111E36;
+      color: #FAF7F2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      gap: 16px;
+    }
+    .icon { font-size: 48px; margin-bottom: 8px; }
+    .logo {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #C4884A;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    h1 { font-size: 22px; font-weight: 500; color: #FAF7F2; }
+    p  { font-size: 14px; color: #8A8070; line-height: 1.6; max-width: 280px; }
+    button {
+      margin-top: 8px;
+      padding: 12px 28px;
+      background: #C4884A;
+      color: #111E36;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <p class="logo">atomicme</p>
+  <div class="icon">📡</div>
+  <h1>Sem conexão</h1>
+  <p>Você está offline. Verifique sua conexão e tente novamente.</p>
+  <button onclick="window.location.reload()">Tentar novamente</button>
+</body>
+</html>
