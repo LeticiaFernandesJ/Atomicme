@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -23,7 +22,10 @@ model User {
   badges     UserBadge[]
   accounts   Account[]
   sessions   Session[]
-  rewards    Reward[]
+  rewards           Reward[]
+  emotionalLogs     EmotionalLog[]
+  emotionalSchemas  EmotionalSchema[]
+  thoughtRecords    ThoughtRecord[]
 }
 
 model Identity {
@@ -49,7 +51,8 @@ model Habit {
   userId      String
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   logs        HabitLog[]
-  stackItems  StackItem[]
+  stackItems       StackItem[]
+  emotionLink      HabitEmotionLink?
   createdAt   DateTime    @default(now())
 }
 
@@ -138,4 +141,60 @@ model Reward {
   userId       String
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ── Mente & Emoções ──
+
+model EmotionalLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime @default(now())
+  emotion   String
+  intensity Int
+  situation String?
+  thought   String?
+  note      String?
+  createdAt DateTime @default(now())
+}
+
+model EmotionalSchema {
+  id     String   @id @default(cuid())
+  userId String
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date   DateTime @default(now())
+  scores String   // JSON com as 14 dimensões
+}
+
+model ThoughtRecord {
+  id                 String   @id @default(cuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date               DateTime @default(now())
+  situation          String
+  emotion            String
+  intensityBefore    Int
+  intensityAfter     Int?
+  autoThought        String
+  evidenceFor        String?
+  evidenceAgainst    String?
+  alternativeThought String?
+  completed          Boolean  @default(false)
+}
+
+model HabitEmotionLink {
+  id         String  @id @default(cuid())
+  habitId    String  @unique
+  habit      Habit   @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  emotion    String
+  strategies String  // JSON array
 }
