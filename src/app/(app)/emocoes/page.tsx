@@ -40,7 +40,7 @@ async function EmotionsContent() {
   const thoughtCount = await prisma.thoughtRecord.count({ where: { userId, completed: true } });
   const schemaCount = await prisma.emotionalSchema.count({ where: { userId } });
 
-  return (
+ 
   
 
       {/* Thermometer */}
