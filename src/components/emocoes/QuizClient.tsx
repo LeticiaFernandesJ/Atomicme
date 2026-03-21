@@ -15,22 +15,17 @@ interface QuizClientProps {
   history: QuizHistory[];
 }
 
-const QUIZ_QUESTIONS = SCHEMA_DIMENSIONS.flatMap((dim) => [
-  { id: `${dim.key}_1`, dimension: dim.key, label: dim.label, text: dim.description },
-  {
-    id: `${dim.key}_2`,
-    dimension: dim.key,
-    label: dim.label,
-    text: `Consigo lidar bem com a seguinte situação: "${dim.description.toLowerCase()}"`,
-  },
-]);
+const QUIZ_QUESTIONS = SCHEMA_DIMENSIONS.map((dim) => ({
+  id: `${dim.key}_1`,
+  dimension: dim.key,
+  label: dim.label,
+  text: dim.description,
+}));
 
 function computeScores(answers: Record<string, number>): Record<string, number> {
   const scores: Record<string, number> = {};
   SCHEMA_DIMENSIONS.forEach((dim) => {
-    const q1 = answers[`${dim.key}_1`] ?? 3;
-    const q2 = answers[`${dim.key}_2`] ?? 3;
-    scores[dim.key] = Math.round(((q1 + q2) / 2) * 10) / 10;
+    scores[dim.key] = answers[`${dim.key}_1`] ?? 3;
   });
   return scores;
 }
