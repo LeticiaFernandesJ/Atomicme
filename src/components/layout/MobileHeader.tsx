@@ -12,21 +12,47 @@ interface MobileHeaderProps {
   userXp: number;
 }
 
+// ── Mesmos ícones SVG da Sidebar desktop ──
+function IconHome({ active }: { active: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.15" : "0"} /></svg>;
+}
+function IconHabits({ active }: { active: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.12" : "0"} /><path d="M8.5 12L11 14.5L15.5 9.5" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinecap="round" strokeLinejoin="round" /></svg>;
+}
+function IconStacking({ active }: { active: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="4" rx="2" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.12" : "0"} /><rect x="3" y="10" width="18" height="4" rx="2" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.12" : "0"} /><rect x="3" y="16" width="18" height="4" rx="2" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.12" : "0"} /></svg>;
+}
+function IconAchievements({ active }: { active: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.85 8.77L22 9.27L16.82 13.97L18.47 21L12 17.27L5.53 21L7.18 13.97L2 9.27L9.15 8.77L12 2Z" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinejoin="round" fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.15" : "0"} /></svg>;
+}
+function IconIdentity({ active }: { active: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.12" : "0"} /><path d="M4 20C4 17 7.58 14 12 14C16.42 14 20 17 20 20" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinecap="round" /></svg>;
+}
+function IconRewards({ active }: { active: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 12V22H4V12" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinecap="round" strokeLinejoin="round" fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.1" : "0"} /><path d="M22 7H2V12H22V7Z" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinecap="round" strokeLinejoin="round" /><path d="M12 22V7" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinecap="round" /><path d="M12 7H7.5C6.12 7 5 5.88 5 4.5C5 3.12 6.12 2 7.5 2C10 2 12 7 12 7Z" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinecap="round" strokeLinejoin="round" /><path d="M12 7H16.5C17.88 7 19 5.88 19 4.5C19 3.12 17.88 2 16.5 2C14 2 12 7 12 7Z" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinecap="round" strokeLinejoin="round" /></svg>;
+}
+function IconMind({ active }: { active: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.5 2 6 4.5 6 7.5C6 9.5 7 11.3 8.5 12.5C7 13 6 14.5 6 16C6 18.8 8.2 21 11 21H13C15.8 21 18 18.8 18 16C18 14.5 17 13 15.5 12.5C17 11.3 18 9.5 18 7.5C18 4.5 15.5 2 12 2Z" stroke="currentColor" strokeWidth={active ? "1.8" : "1.5"} strokeLinecap="round" fill={active ? "currentColor" : "none"} fillOpacity={active ? "0.12" : "0"} /><path d="M9 9H15M9 12H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>;
+}
+function IconLogout() {
+  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><polyline points="16 17 21 12 16 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>;
+}
+
 const habitosItems = [
-  { href: "/dashboard",   label: "Início",      emoji: "🏠" },
-  { href: "/habitos",     label: "Hábitos",     emoji: "✅" },
-  { href: "/stacking",    label: "Stacking",    emoji: "🔗" },
-  { href: "/conquistas",  label: "Conquistas",  emoji: "⭐" },
-  { href: "/identidade",  label: "Identidade",  emoji: "🧠" },
-  { href: "/recompensas", label: "Recompensas", emoji: "🎁" },
+  { href: "/dashboard",   label: "Início",      Icon: IconHome },
+  { href: "/habitos",     label: "Hábitos",     Icon: IconHabits },
+  { href: "/stacking",    label: "Stacking",    Icon: IconStacking },
+  { href: "/conquistas",  label: "Conquistas",  Icon: IconAchievements },
+  { href: "/identidade",  label: "Identidade",  Icon: IconIdentity },
+  { href: "/recompensas", label: "Recompensas", Icon: IconRewards },
 ];
 
 const menteItems = [
-  { href: "/emocoes",              label: "Termômetro",    emoji: "🌡️" },
-  { href: "/emocoes/diario",       label: "Diário",        emoji: "📓" },
-  { href: "/emocoes/estrategias",  label: "Estratégias",   emoji: "🧰" },
-  { href: "/emocoes/quiz",         label: "Quiz",          emoji: "🧭" },
-  { href: "/emocoes/thought",      label: "Pensamentos",   emoji: "💭" },
+  { href: "/emocoes",              label: "Termômetro",  Icon: IconMind },
+  { href: "/emocoes/diario",       label: "Diário",      Icon: IconMind },
+  { href: "/emocoes/estrategias",  label: "Estratégias", Icon: IconMind },
+  { href: "/emocoes/quiz",         label: "Quiz",        Icon: IconMind },
+  { href: "/emocoes/thought",      label: "Pensamentos", Icon: IconMind },
 ];
 
 export function MobileHeader({ userName, userImage, userLevel, userXp }: MobileHeaderProps) {
@@ -69,24 +95,24 @@ export function MobileHeader({ userName, userImage, userLevel, userXp }: MobileH
         )}
       </div>
 
-      {/* Drawer overlay */}
+      {/* Drawer */}
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Backdrop */}
           <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
 
-          {/* Drawer panel */}
-          <div className="absolute left-0 top-0 bottom-0 w-72 flex flex-col"
+          {/* Panel */}
+          <div className="absolute left-0 top-0 bottom-0 w-64 flex flex-col"
             style={{ background: "var(--navy-deep)" }}>
 
-            {/* Drawer header */}
-            <div className="flex items-center justify-between px-5 py-5"
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 h-14 shrink-0"
               style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
               <span className="text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "var(--caramel)" }}>
                 atomicme
               </span>
               <button onClick={() => setOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:opacity-60 transition-opacity"
+                className="w-8 h-8 flex items-center justify-center hover:opacity-60 transition-opacity"
                 style={{ color: "var(--text-muted)" }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -94,32 +120,32 @@ export function MobileHeader({ userName, userImage, userLevel, userXp }: MobileH
               </button>
             </div>
 
-            {/* User info */}
-            <div className="px-4 py-4 flex items-center gap-3"
+            {/* User */}
+            <div className="px-4 py-3 flex items-center gap-2.5 shrink-0"
               style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
               {userImage ? (
-                <img src={userImage} alt={userName} className="w-10 h-10 rounded-full object-cover"
+                <img src={userImage} alt={userName} className="w-8 h-8 rounded-full object-cover"
                   style={{ border: "1.5px solid var(--caramel)" }} />
               ) : (
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium"
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium shrink-0"
                   style={{ background: "var(--navy)", color: "var(--caramel)", border: "1.5px solid var(--caramel)" }}>
                   {firstName[0]?.toUpperCase()}
                 </div>
               )}
-              <div>
-                <p className="text-sm font-medium" style={{ color: "var(--offwhite)" }}>{userName}</p>
-                <p className="text-xs" style={{ color: "var(--caramel)" }}>Nível {userLevel} · {userXp} XP</p>
+              <div className="min-w-0">
+                <p className="text-sm font-medium truncate" style={{ color: "var(--offwhite)" }}>{firstName}</p>
+                <p className="text-[11px]" style={{ color: "var(--caramel)" }}>Nível {userLevel} · {userXp} XP</p>
               </div>
             </div>
 
             {/* Nav */}
             <nav className="flex-1 overflow-y-auto px-3 py-3">
-              {/* Hábitos */}
-              <p className="text-[10px] uppercase tracking-widest px-3 py-2"
+              {/* Hábitos section */}
+              <p className="text-[10px] uppercase tracking-widest px-3 pb-1 pt-1"
                 style={{ color: "rgba(255,255,255,0.25)" }}>
                 Hábitos
               </p>
-              {habitosItems.map(({ href, label, emoji }) => {
+              {habitosItems.map(({ href, label, Icon }) => {
                 const active = isActive(href);
                 return (
                   <Link key={href} href={href} onClick={() => setOpen(false)}
@@ -127,20 +153,25 @@ export function MobileHeader({ userName, userImage, userLevel, userXp }: MobileH
                     style={{
                       background: active ? "rgba(196,136,74,0.12)" : "transparent",
                       color: active ? "var(--caramel)" : "var(--text-muted)",
-                    }}>
-                    <span className="text-base w-6 text-center">{emoji}</span>
+                    }}
+                    onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+                    onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <Icon active={active} />
                     <span className="font-medium">{label}</span>
                     {active && <div className="ml-auto w-1 h-4 rounded-full" style={{ background: "var(--caramel)" }} />}
                   </Link>
                 );
               })}
 
-              {/* Mente */}
-              <p className="text-[10px] uppercase tracking-widest px-3 py-2 mt-3"
-                style={{ color: "rgba(167,139,250,0.5)" }}>
-                Mente &amp; Emoções
-              </p>
-              {menteItems.map(({ href, label, emoji }) => {
+              {/* Mente section */}
+              <div className="mt-3 mb-1">
+                <p className="text-[10px] uppercase tracking-widest px-3 pb-1"
+                  style={{ color: "rgba(167,139,250,0.5)" }}>
+                  Mente &amp; Emoções
+                </p>
+              </div>
+              {menteItems.map(({ href, label, Icon }) => {
                 const active = isActive(href);
                 return (
                   <Link key={href} href={href} onClick={() => setOpen(false)}
@@ -148,8 +179,11 @@ export function MobileHeader({ userName, userImage, userLevel, userXp }: MobileH
                     style={{
                       background: active ? "rgba(167,139,250,0.12)" : "transparent",
                       color: active ? "#a78bfa" : "var(--text-muted)",
-                    }}>
-                    <span className="text-base w-6 text-center">{emoji}</span>
+                    }}
+                    onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+                    onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <Icon active={active} />
                     <span className="font-medium">{label}</span>
                     {active && <div className="ml-auto w-1 h-4 rounded-full" style={{ background: "#a78bfa" }} />}
                   </Link>
@@ -158,16 +192,13 @@ export function MobileHeader({ userName, userImage, userLevel, userXp }: MobileH
             </nav>
 
             {/* Logout */}
-            <div className="px-3 pb-6 pt-2" style={{ borderTop: "0.5px solid rgba(255,255,255,0.06)" }}>
+            <div className="px-3 pb-6 shrink-0"
+              style={{ borderTop: "0.5px solid rgba(255,255,255,0.06)" }}>
               <button onClick={() => signOut({ callbackUrl: "/login" })}
-                className="w-full flex items-center gap-3 px-3 py-3 rounded-[10px] hover:opacity-70 transition-all text-sm"
+                className="w-full flex items-center gap-3 px-3 py-3 rounded-[10px] text-sm transition-all hover:opacity-70 mt-2"
                 style={{ color: "var(--text-muted)" }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  <polyline points="16 17 21 12 16 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-                Sair da conta
+                <IconLogout />
+                <span className="font-medium">Sair da conta</span>
               </button>
             </div>
           </div>

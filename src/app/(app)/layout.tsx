@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Sidebar, MobileNav } from "@/components/layout/Sidebar";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { MobileHeader } from "@/components/layout/MobileHeader";
 import { InstallPrompt } from "@/components/InstallPrompt";
 
@@ -21,7 +21,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const userXp    = user?.xp    ?? 0;
 
   return (
-    <div className="flex min-h-screen" style={{ background: "var(--offwhite)" }}>
+    <div className="flex h-screen overflow-hidden" style={{ background: "var(--offwhite)" }}>
 
       {/* Sidebar — desktop only */}
       <div className="hidden lg:flex">
@@ -33,35 +33,28 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         />
       </div>
 
-      {/* Main content */}
-      <main className="flex-1 min-w-0 overflow-y-auto">
+      {/* Right side — header + scrollable content */}
+      <div className="flex flex-col flex-1 min-w-0 h-screen">
 
-        {/* Mobile header with hamburger */}
-        <MobileHeader
-          userName={userName}
-          userImage={userImage}
-          userLevel={userLevel}
-          userXp={userXp}
-        />
-
-        {/* Page content */}
-        <div className="px-4 py-4 pb-24 lg:px-8 lg:py-8 lg:pb-8 max-w-3xl lg:mx-auto">
-          {children}
+        {/* Mobile header — fixed at top */}
+        <div className="lg:hidden shrink-0">
+          <MobileHeader
+            userName={userName}
+            userImage={userImage}
+            userLevel={userLevel}
+            userXp={userXp}
+          />
         </div>
-      </main>
 
-      {/* PWA install prompt */}
-      <InstallPrompt />
-
-      {/* Mobile bottom nav */}
-      <div className="lg:hidden">
-        <MobileNav
-          userName={userName}
-          userImage={userImage}
-          userLevel={userLevel}
-          userXp={userXp}
-        />
+        {/* Scrollable content */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="px-4 py-4 pb-8 lg:px-8 lg:py-8 max-w-3xl lg:mx-auto">
+            {children}
+          </div>
+        </main>
       </div>
+
+      <InstallPrompt />
     </div>
   );
 }
