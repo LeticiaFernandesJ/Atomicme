@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Sidebar, MobileNav } from "@/components/layout/Sidebar";
+import { MobileHeader } from "@/components/layout/MobileHeader";
 import { InstallPrompt } from "@/components/InstallPrompt";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -35,27 +36,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       {/* Main content */}
       <main className="flex-1 min-w-0 overflow-y-auto">
 
-        {/* Mobile top bar */}
-        <div className="lg:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-30"
-          style={{ background: "var(--offwhite)", borderBottom: "0.5px solid var(--border-light)" }}>
-          <span className="text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "var(--navy)" }}>
-            atomicme
-          </span>
-          <div className="flex items-center gap-2">
-            <span className="text-xs" style={{ color: "var(--caramel)" }}>
-              Nível {userLevel}
-            </span>
-            {userImage ? (
-              <img src={userImage} alt={userName} className="w-7 h-7 rounded-full object-cover"
-                style={{ border: "1.5px solid var(--caramel)" }} />
-            ) : (
-              <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium"
-                style={{ background: "var(--navy)", color: "var(--caramel)", border: "1.5px solid var(--caramel)" }}>
-                {userName[0]?.toUpperCase()}
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Mobile header with hamburger */}
+        <MobileHeader
+          userName={userName}
+          userImage={userImage}
+          userLevel={userLevel}
+          userXp={userXp}
+        />
 
         {/* Page content */}
         <div className="px-4 py-4 pb-24 lg:px-8 lg:py-8 lg:pb-8 max-w-3xl lg:mx-auto">
