@@ -40,20 +40,20 @@ export const EMOTION_TIPS: Record<EmotionType, string> = {
 };
 
 export const SCHEMA_DIMENSIONS = [
-  { key: "validacao",          label: "Validação",            description: "Preciso que outros validem o que sinto" },
-  { key: "compreensibilidade", label: "Compreensibilidade",   description: "Minhas emoções fazem sentido para mim" },
-  { key: "culpa",              label: "Culpa",                description: "Me sinto culpado por sentir o que sinto" },
-  { key: "duracao",            label: "Duração",              description: "Acho que meu sofrimento vai durar para sempre" },
-  { key: "controle",           label: "Controle",             description: "Sinto que minhas emoções estão fora de controle" },
-  { key: "entorpecimento",     label: "Entorpecimento",       description: "Prefiro não sentir nada a sentir algo doloroso" },
-  { key: "racionalidade",      label: "Racionalidade",        description: "Emoções são irracionais e deveriam ser suprimidas" },
-  { key: "consenso",           label: "Consenso",             description: "Ninguém mais sente o que eu sinto" },
-  { key: "aceitacao",          label: "Aceitação",            description: "Consigo aceitar minhas emoções sem me julgar" },
-  { key: "ruminacao",          label: "Ruminação",            description: "Fico preso nos mesmos pensamentos negativos" },
-  { key: "expressao",          label: "Expressão",            description: "Me sinto seguro expressando minhas emoções" },
-  { key: "culpa_sobre_culpa",  label: "Meta-culpa",           description: "Me sinto culpado por estar ansioso ou triste" },
-  { key: "valores",            label: "Valores",              description: "Minhas emoções refletem o que é importante para mim" },
-  { key: "sentimentos_mistos", label: "Ambivalência",         description: "Consigo tolerar emoções contraditórias ao mesmo tempo" },
+  { key: "validacao",          label: "Validação",            description: "Você teve um dia difícil no trabalho e só consegue se sentir melhor depois que alguém confirma que faz sentido você estar chateado." },
+  { key: "compreensibilidade", label: "Compreensibilidade",   description: "Você fica ansioso antes de reuniões importantes e entende que é porque se importa com o resultado." },
+  { key: "culpa",              label: "Culpa",                description: "Você está triste sem motivo claro e fica se dizendo que não tem direito de se sentir assim." },
+  { key: "duracao",            label: "Duração",              description: "Você está ansioso há dias e começa a acreditar que nunca vai se sentir tranquilo de novo." },
+  { key: "controle",           label: "Controle",             description: "Você começa a chorar numa conversa simples e sente que não consegue parar, mesmo querendo." },
+  { key: "entorpecimento",     label: "Entorpecimento",       description: "Você evita pensar no assunto, se distrai com o celular e percebe que ficou o dia todo no piloto automático." },
+  { key: "racionalidade",      label: "Racionalidade",        description: "Você sente raiva numa discussão mas se força a falar só em fatos, achando que demonstrar emoção é fraqueza." },
+  { key: "consenso",           label: "Consenso",             description: "Você se sente sozinho numa festa e acha que todo mundo está bem menos você, que algo de errado só existe em você." },
+  { key: "aceitacao",          label: "Aceitação",            description: "Você sente ciúme e, em vez de se criticar por isso, reconhece o sentimento e deixa ele passar." },
+  { key: "ruminacao",          label: "Ruminação",            description: "Você fica repassando uma discussão de horas atrás, imaginando o que deveria ter dito, sem conseguir parar." },
+  { key: "expressao",          label: "Expressão",            description: "Você conta para um amigo que está com medo e não sente que precisa minimizar ou se desculpar por isso." },
+  { key: "culpa_sobre_culpa",  label: "Meta-culpa",           description: "Você está triste num dia em que 'não deveria' e fica se repetindo que tem motivos de sobra para ser grato." },
+  { key: "valores",            label: "Valores",              description: "Você fica ansioso antes de uma apresentação e percebe que é porque se importa de verdade com aquele projeto." },
+  { key: "sentimentos_mistos", label: "Ambivalência",         description: "Você sente alívio e tristeza ao mesmo tempo quando um relacionamento difícil termina, e consegue ficar com os dois sentimentos sem precisar resolver isso." },
 ];
 
 export const STRATEGIES = [
