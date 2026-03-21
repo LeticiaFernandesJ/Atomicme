@@ -205,6 +205,7 @@ export async function getBadgeProgress(
   const { activeHabits, maxStreak, stackConsistency, recoveries, checkinStreak, thoughtCount, schemaCount } = metrics;
 
   const earnedSlugs = new Set(user.badges.map((ub) => ub.badge.slug));
+  const { identities, stacks, emotionalLogs, level, xp } = user;
 
   function get(slug: string): { progress: number; total: number; label: string } {
     const earned = earnedSlugs.has(slug);
@@ -235,31 +236,31 @@ export async function getBadgeProgress(
       return { progress: earned ? 1 : 0, total: 1, label: earned ? "Conquistado" : "Complete todos hoje" };
     }
     if (slug === "multi-identity") {
-      const progress = Math.min(user.identities.length, 4);
-      return { progress, total: 4, label: earned ? "Conquistado" : `${user.identities.length}/4 identidades` };
+      const progress = Math.min(identities.length, 4);
+      return { progress, total: 4, label: earned ? "Conquistado" : `${identities.length}/4 identidades` };
     }
     if (slug === "level-5") {
-      const progress = Math.min(user.level, 5);
-      return { progress, total: 5, label: earned ? "Conquistado" : `Nivel ${user.level}/5` };
+      const progress = Math.min(level, 5);
+      return { progress, total: 5, label: earned ? "Conquistado" : `Nivel ${level}/5` };
     }
     if (slug === "level-10") {
-      const progress = Math.min(user.level, 10);
-      return { progress, total: 10, label: earned ? "Conquistado" : `Nivel ${user.level}/10` };
+      const progress = Math.min(level, 10);
+      return { progress, total: 10, label: earned ? "Conquistado" : `Nivel ${level}/10` };
     }
     if (slug === "xp-500") {
-      const progress = Math.min(user.xp, 500);
-      return { progress, total: 500, label: earned ? "Conquistado" : `${user.xp}/500 XP` };
+      const progress = Math.min(xp, 500);
+      return { progress, total: 500, label: earned ? "Conquistado" : `${xp}/500 XP` };
     }
     if (slug === "xp-1000") {
-      const progress = Math.min(user.xp, 1000);
-      return { progress, total: 1000, label: earned ? "Conquistado" : `${user.xp}/1000 XP` };
+      const progress = Math.min(xp, 1000);
+      return { progress, total: 1000, label: earned ? "Conquistado" : `${xp}/1000 XP` };
     }
     if (slug === "first-stack") {
-      const progress = Math.min(user.stacks.length, 1);
-      return { progress, total: 1, label: earned ? "Conquistado" : `${user.stacks.length}/1 corrente` };
+      const progress = Math.min(stacks.length, 1);
+      return { progress, total: 1, label: earned ? "Conquistado" : `${stacks.length}/1 corrente` };
     }
     if (slug === "stack-5") {
-      const max = user.stacks.length > 0 ? Math.max(...user.stacks.map((s) => s.items.length)) : 0;
+      const max = stacks.length > 0 ? Math.max(...stacks.map((s) => s.items.length)) : 0;
       const progress = Math.min(max, 5);
       return { progress, total: 5, label: earned ? "Conquistado" : `${max}/5 habitos na corrente` };
     }
@@ -272,7 +273,7 @@ export async function getBadgeProgress(
       return { progress, total: 5, label: earned ? "Conquistado" : `${recoveries}/5 recuperacoes` };
     }
     if (slug === "first-checkin") {
-      const progress = Math.min(user.emotionalLogs.length, 1);
+      const progress = Math.min(emotionalLogs.length, 1);
       return { progress, total: 1, label: earned ? "Conquistado" : "Faca um check-in" };
     }
     if (slug === "7-checkins") {
