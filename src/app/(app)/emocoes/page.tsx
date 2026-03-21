@@ -41,16 +41,7 @@ async function EmotionsContent() {
   const schemaCount = await prisma.emotionalSchema.count({ where: { userId } });
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-xl lg:text-2xl font-medium" style={{ color: "var(--text-dark)" }}>
-          Mente &amp; Emoções
-        </h1>
-        <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>
-          Baseado em <span style={{ color: "#a78bfa" }}>Não Acredite em Tudo Que Você Sente</span> — Robert L. Leahy
-        </p>
-      </div>
+  
 
       {/* Thermometer */}
       <EmotionThermometer
