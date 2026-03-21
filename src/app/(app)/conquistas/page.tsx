@@ -53,7 +53,8 @@ async function ConquistasContent() {
   });
 
   // Award any newly unlocked badges first, then fetch fresh progress
-  await checkAndAwardBadges(userId);
+  // Wrapped in try/catch so errors here never crash the page or drop the session
+  try { await checkAndAwardBadges(userId); } catch (e) { console.error("[checkAndAwardBadges]", e); }
   const badgeProgress = await getBadgeProgress(userId);
   const earned = badgeProgress.filter((b) => b.earned);
   const inProgress = badgeProgress.filter((b) => !b.earned);
