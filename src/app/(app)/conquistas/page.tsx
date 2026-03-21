@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { BookQuote } from "@/components/ui/BookQuote";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { getBadgeProgress } from "@/lib/badges";
+import { getBadgeProgress, checkAndAwardBadges } from "@/lib/badges";
 import { xpForNextLevel } from "@/lib/xp";
 
 const BADGE_ICONS: Record<string, string> = {
@@ -52,6 +52,8 @@ async function ConquistasContent() {
     include: { identities: { take: 1, orderBy: { xp: "desc" } } },
   });
 
+  // Award any newly unlocked badges first, then fetch fresh progress
+  await checkAndAwardBadges(userId);
   const badgeProgress = await getBadgeProgress(userId);
   const earned = badgeProgress.filter((b) => b.earned);
   const inProgress = badgeProgress.filter((b) => !b.earned);

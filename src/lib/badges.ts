@@ -235,46 +235,96 @@ export async function getBadgeProgress(
     if (streakMap[slug]) {
       const total = streakMap[slug];
       const progress = earned ? total : Math.min(maxStreak, total);
-      return { progress, total, label: `${progress}/${total} dias` };
+      const label = earned ? "Conquistado" : `${progress}/${total} dias`;
+      return { progress, total, label };
     }
 
     // Habit count
-    if (slug === "first-habit") return { progress: Math.min(activeHabits.length, 1), total: 1, label: `${activeHabits.length}/1 hábito` };
-    if (slug === "3-habits")    return { progress: Math.min(activeHabits.length, 3), total: 3, label: `${activeHabits.length}/3 hábitos` };
-    if (slug === "5-habits")    return { progress: Math.min(activeHabits.length, 5), total: 5, label: `${activeHabits.length}/5 hábitos` };
+    if (slug === "first-habit") {
+      const progress = Math.min(activeHabits.length, 1);
+      return { progress, total: 1, label: earned ? "Conquistado" : `${activeHabits.length}/1 hábito` };
+    }
+    if (slug === "3-habits") {
+      const progress = Math.min(activeHabits.length, 3);
+      return { progress, total: 3, label: earned ? "Conquistado" : `${activeHabits.length}/3 hábitos` };
+    }
+    if (slug === "5-habits") {
+      const progress = Math.min(activeHabits.length, 5);
+      return { progress, total: 5, label: earned ? "Conquistado" : `${activeHabits.length}/5 hábitos` };
+    }
 
     // All done today — binary
     if (slug === "all-done") return { progress: earned ? 1 : 0, total: 1, label: earned ? "Conquistado" : "Complete todos hoje" };
 
     // Identity
-    if (slug === "multi-identity") return { progress: Math.min(identities.length, 4), total: 4, label: `${identities.length}/4 identidades` };
+    if (slug === "multi-identity") {
+      const progress = Math.min(identities.length, 4);
+      return { progress, total: 4, label: earned ? "Conquistado" : `${identities.length}/4 identidades` };
+    }
 
     // Level
-    if (slug === "level-5")  return { progress: Math.min(user?.level ?? 0, 5),  total: 5,  label: `Nível ${user?.level ?? 0}/5` };
-    if (slug === "level-10") return { progress: Math.min(user?.level ?? 0, 10), total: 10, label: `Nível ${user?.level ?? 0}/10` };
+    if (slug === "level-5") {
+      const progress = Math.min(user?.level ?? 0, 5);
+      return { progress, total: 5, label: earned ? "Conquistado" : `Nível ${user?.level ?? 0}/5` };
+    }
+    if (slug === "level-10") {
+      const progress = Math.min(user?.level ?? 0, 10);
+      return { progress, total: 10, label: earned ? "Conquistado" : `Nível ${user?.level ?? 0}/10` };
+    }
 
     // XP
-    if (slug === "xp-500")  return { progress: Math.min(user?.xp ?? 0, 500),  total: 500,  label: `${user?.xp ?? 0}/500 XP` };
-    if (slug === "xp-1000") return { progress: Math.min(user?.xp ?? 0, 1000), total: 1000, label: `${user?.xp ?? 0}/1000 XP` };
+    if (slug === "xp-500") {
+      const progress = Math.min(user?.xp ?? 0, 500);
+      return { progress, total: 500, label: earned ? "Conquistado" : `${user?.xp ?? 0}/500 XP` };
+    }
+    if (slug === "xp-1000") {
+      const progress = Math.min(user?.xp ?? 0, 1000);
+      return { progress, total: 1000, label: earned ? "Conquistado" : `${user?.xp ?? 0}/1000 XP` };
+    }
 
     // Stacking
-    if (slug === "first-stack") return { progress: Math.min(stacks.length, 1), total: 1, label: `${stacks.length}/1 corrente` };
+    if (slug === "first-stack") {
+      const progress = Math.min(stacks.length, 1);
+      return { progress, total: 1, label: earned ? "Conquistado" : `${stacks.length}/1 corrente` };
+    }
     if (slug === "stack-5") {
       const max = Math.max(...stacks.map((s) => s.items.length), 0);
-      return { progress: Math.min(max, 5), total: 5, label: `${max}/5 hábitos na corrente` };
+      const progress = Math.min(max, 5);
+      return { progress, total: 5, label: earned ? "Conquistado" : `${max}/5 hábitos na corrente` };
     }
-    if (slug === "full-stack") return { progress: Math.min(stackConsistency, 14), total: 14, label: `${stackConsistency}/14 dias completos` };
+    if (slug === "full-stack") {
+      const progress = Math.min(stackConsistency, 14);
+      return { progress, total: 14, label: earned ? "Conquistado" : `${stackConsistency}/14 dias completos` };
+    }
 
     // No miss twice
-    if (slug === "no-miss-twice") return { progress: Math.min(recoveries, 5), total: 5, label: `${recoveries}/5 recuperações` };
+    if (slug === "no-miss-twice") {
+      const progress = Math.min(recoveries, 5);
+      return { progress, total: 5, label: earned ? "Conquistado" : `${recoveries}/5 recuperações` };
+    }
 
     // Emotional
-    if (slug === "first-checkin") return { progress: Math.min(emotionalLogs.length, 1), total: 1, label: emotionalLogs.length >= 1 ? "Conquistado" : "Faça um check-in" };
-    if (slug === "7-checkins")    return { progress: Math.min(checkinStreak, 7), total: 7, label: `${checkinStreak}/7 dias consecutivos` };
-    if (slug === "first-schema")  return { progress: Math.min(schemaCount, 1), total: 1, label: schemaCount >= 1 ? "Conquistado" : "Complete o quiz" };
-    if (slug === "5-thoughts")    return { progress: Math.min(thoughtCount, 5), total: 5, label: `${thoughtCount}/5 registros` };
+    if (slug === "first-checkin") {
+      const progress = Math.min(emotionalLogs.length, 1);
+      return { progress, total: 1, label: earned ? "Conquistado" : "Faça um check-in" };
+    }
+    if (slug === "7-checkins") {
+      const progress = Math.min(checkinStreak, 7);
+      return { progress, total: 7, label: earned ? "Conquistado" : `${checkinStreak}/7 dias consecutivos` };
+    }
+    if (slug === "first-schema") {
+      const progress = Math.min(schemaCount, 1);
+      return { progress, total: 1, label: earned ? "Conquistado" : "Complete o quiz" };
+    }
+    if (slug === "5-thoughts") {
+      const progress = Math.min(thoughtCount, 5);
+      return { progress, total: 5, label: earned ? "Conquistado" : `${thoughtCount}/5 registros` };
+    }
     if (slug === "10-strategies") return { progress: 0, total: 10, label: "Em breve" };
-    if (slug === "emotion-habit") return { progress: Math.min(linkCount, 3), total: 3, label: `${linkCount}/3 hábitos vinculados` };
+    if (slug === "emotion-habit") {
+      const progress = Math.min(linkCount, 3);
+      return { progress, total: 3, label: earned ? "Conquistado" : `${linkCount}/3 hábitos vinculados` };
+    }
 
     // Fallback
     return { progress: earned ? 1 : 0, total: 1, label: earned ? "Conquistado" : "Em progresso" };
